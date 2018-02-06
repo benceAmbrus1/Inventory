@@ -2,18 +2,12 @@ package com.codecool;
 
 import java.util.List;
 
-public class StorageCapable {
+public interface StorageCapable {
 
+    List<Product> getAllProduct();
 
-    public List<Product> getAllProduct(){
+    void storeCDProduct(String name, int price, int tracks);
 
-    }
+    void storeBookProduct(String name, int price, int pages);
 
-    public void storeCDProduct(String name, int price, int tracks){
-
-    }
-
-    public void storeBookProduct(String name, int price, int pages){
-
-    }
 }

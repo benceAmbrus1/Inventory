@@ -8,4 +8,8 @@ public class CDProduct extends Product {
         super(name, price);
         this.numOfTracks = numOfTracks;
     }
+
+    public int getNumOfTracks() {
+        return numOfTracks;
+    }
 }
