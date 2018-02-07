@@ -47,10 +47,11 @@ public class Store implements StorageCapable {
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(fileName));
 
-            Element product1 = doc.createElement("Product");
-            rootElement.appendChild(product1);
-
             for (int i = 0; i < getAllProduct().size() ; i++) {
+
+                Element product1 = doc.createElement("Product");
+                rootElement.appendChild(product1);
+
                 if (getAllProduct().get(i) instanceof CDProduct) {
 
                     Attr attr = doc.createAttribute("type");
