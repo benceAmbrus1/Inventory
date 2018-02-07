@@ -2,7 +2,7 @@ package com.codecool;
 
 public class CDProduct extends Product {
 
-    int numOfTracks;
+    private int numOfTracks;
 
     public CDProduct(String name, int price, int numOfTracks){
         super(name, price);
