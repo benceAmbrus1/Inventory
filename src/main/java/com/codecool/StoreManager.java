@@ -4,7 +4,7 @@ import java.util.List;
 
 public class StoreManager {
 
-    StorageCapable storage;
+    private StorageCapable storage;
 
     public void addStorage(StorageCapable storage){
         this.storage = storage;
@@ -22,7 +22,7 @@ public class StoreManager {
         List<Product> listOfProducts = storage.getAllProduct();
         String products = "";
         for (int i = 0; i < listOfProducts.size(); i++) {
-            if (i == listOfProducts.size() - 1) {
+            if (i == listOfProducts.size()-1) {
                 products += listOfProducts.get(i).getName();
             } else {
                 products += listOfProducts.get(i).getName() + ", ";

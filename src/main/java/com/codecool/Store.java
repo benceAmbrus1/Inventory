@@ -54,42 +54,18 @@ public class Store implements StorageCapable {
 
                 if (getAllProduct().get(i) instanceof CDProduct) {
 
-                    Attr attr = doc.createAttribute("type");
-                    attr.setValue("cd");
-                    product1.setAttributeNode(attr);
-
-                    Attr attr1 = doc.createAttribute("name");
-                    attr1.setValue(getAllProduct().get(i).getName());
-                    product1.setAttributeNode(attr1);
-
-                    Attr attr2 = doc.createAttribute("price");
-                    attr2.setValue(Integer.toString(getAllProduct().get(i).getPrice()));
-                    product1.setAttributeNode(attr2);
-
-                    Attr attr3 = doc.createAttribute("tracks");
-                    attr3.setValue(Integer.toString(((CDProduct) getAllProduct().get(i)).getNumOfTracks()));
-                    product1.setAttributeNode(attr3);
-
+                    product1.setAttribute("type", "cd");
+                    product1.setAttribute("name", getAllProduct().get(i).getName());
+                    product1.setAttribute("price", Integer.toString(getAllProduct().get(i).getPrice()));
+                    product1.setAttribute("tracks", Integer.toString(((CDProduct) getAllProduct().get(i)).getNumOfTracks()));
                     transformer.transform(source, result);
 
                 } else if (getAllProduct().get(i) instanceof BookProduct) {
 
-                    Attr attr = doc.createAttribute("type");
-                    attr.setValue("book");
-                    product1.setAttributeNode(attr);
-
-                    Attr attr1 = doc.createAttribute("name");
-                    attr1.setValue(getAllProduct().get(i).getName());
-                    product1.setAttributeNode(attr1);
-
-                    Attr attr2 = doc.createAttribute("price");
-                    attr2.setValue(Integer.toString(getAllProduct().get(i).getPrice()));
-                    product1.setAttributeNode(attr2);
-
-                    Attr attr3 = doc.createAttribute("pages");
-                    attr3.setValue(Integer.toString(((BookProduct) getAllProduct().get(i)).getNumOfPages()));
-                    product1.setAttributeNode(attr3);
-
+                    product1.setAttribute("type", "book" );
+                    product1.setAttribute("name", getAllProduct().get(i).getName());
+                    product1.setAttribute("price", Integer.toString(getAllProduct().get(i).getPrice()));
+                    product1.setAttribute("pages", Integer.toString(((BookProduct) getAllProduct().get(i)).getNumOfPages()));
                     transformer.transform(source, result);
                 }
             }
@@ -121,6 +97,7 @@ public class Store implements StorageCapable {
     }
 
     public List<Product> loadProducts(String filename) {
+        products.removeAll(products);
         try {
             File fXmlFile = new File(filename);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -128,24 +105,23 @@ public class Store implements StorageCapable {
             Document doc = dBuilder.parse(fXmlFile);
 
             doc.getDocumentElement().normalize();
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
             NodeList nList = doc.getElementsByTagName("Product");
-            //System.out.println("----------------------------");
+
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
-                System.out.println("\nCurrent Element :" + nNode.getNodeName());
+
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     if (eElement.getAttribute("type").equals("cd")) {
-                        Product product = new CDProduct(eElement.getElementsByTagName("name").item(0).getTextContent(),
-                            Integer.parseInt(eElement.getElementsByTagName("price").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("tracks").item(0).getTextContent()));
-                        products.add(product);
+                        Product product = new CDProduct(eElement.getAttribute("name"),
+                            Integer.parseInt(eElement.getAttribute("price")),
+                            Integer.parseInt(eElement.getAttribute("tracks")));
+                        storeProduct(product);
                     } else if (eElement.getAttribute("type").equals("book")) {
-                        Product product = new BookProduct(eElement.getElementsByTagName("name").item(0).getTextContent(),
-                            Integer.parseInt(eElement.getElementsByTagName("price").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("pages").item(0).getTextContent()));
-                        products.add(product);
+                        Product product = new BookProduct(eElement.getAttribute("name"),
+                            Integer.parseInt(eElement.getAttribute("price")),
+                            Integer.parseInt(eElement.getAttribute("pages")));
+                        storeProduct(product);
                     }
                 }
             }
