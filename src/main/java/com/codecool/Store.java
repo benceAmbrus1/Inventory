@@ -37,55 +37,57 @@ public class Store implements StorageCapable {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
             Document doc = docBuilder.newDocument();
+            Element rootElement = doc.createElement("Products");
+            doc.appendChild(rootElement);
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(fileName));
 
-            Element rootElement = doc.createElement("Store");
-            doc.appendChild(rootElement);
+            Element product1 = doc.createElement("Product");
+            rootElement.appendChild(product1);
 
             for (int i = 0; i < getAllProduct().size() ; i++) {
                 if (getAllProduct().get(i) instanceof CDProduct) {
-                    Element product1 = doc.createElement("Product");
-                    rootElement.appendChild(product1);
+
                     Attr attr = doc.createAttribute("type");
                     attr.setValue("cd");
                     product1.setAttributeNode(attr);
 
-                    Element name = doc.createElement("name");
-                    name.appendChild(doc.createTextNode(getAllProduct().get(i).getName()));
-                    product1.appendChild(name);
+                    Attr attr1 = doc.createAttribute("name");
+                    attr1.setValue(getAllProduct().get(i).getName());
+                    product1.setAttributeNode(attr1);
 
-                    Element price = doc.createElement("price");
-                    price.appendChild(doc.createTextNode(Integer.toString(getAllProduct().get(i).getPrice())));
-                    product1.appendChild(price);
+                    Attr attr2 = doc.createAttribute("price");
+                    attr2.setValue(Integer.toString(getAllProduct().get(i).getPrice()));
+                    product1.setAttributeNode(attr2);
 
-                    Element numOfTracks = doc.createElement("tracks");
-                    numOfTracks.appendChild(doc.createTextNode(Integer.toString(((CDProduct) getAllProduct().get(i)).getNumOfTracks())));
-                    product1.appendChild(numOfTracks);
+                    Attr attr3 = doc.createAttribute("tracks");
+                    attr3.setValue(Integer.toString(((CDProduct) getAllProduct().get(i)).getNumOfTracks()));
+                    product1.setAttributeNode(attr3);
 
                     transformer.transform(source, result);
 
                 } else if (getAllProduct().get(i) instanceof BookProduct) {
-                    Element product1 = doc.createElement("Product");
-                    rootElement.appendChild(product1);
+
                     Attr attr = doc.createAttribute("type");
                     attr.setValue("book");
                     product1.setAttributeNode(attr);
 
-                    Element name = doc.createElement("name");
-                    name.appendChild(doc.createTextNode(getAllProduct().get(i).getName()));
-                    product1.appendChild(name);
+                    Attr attr1 = doc.createAttribute("name");
+                    attr1.setValue(getAllProduct().get(i).getName());
+                    product1.setAttributeNode(attr1);
 
-                    Element price = doc.createElement("price");
-                    price.appendChild(doc.createTextNode(Integer.toString(getAllProduct().get(i).getPrice())));
-                    product1.appendChild(price);
+                    Attr attr2 = doc.createAttribute("price");
+                    attr2.setValue(Integer.toString(getAllProduct().get(i).getPrice()));
+                    product1.setAttributeNode(attr2);
 
-                    Element numOfTracks = doc.createElement("pages");
-                    numOfTracks.appendChild(doc.createTextNode(Integer.toString(((BookProduct) getAllProduct().get(i)).getNumOfPages())));
-                    product1.appendChild(numOfTracks);
+                    Attr attr3 = doc.createAttribute("pages");
+                    attr3.setValue(Integer.toString(((BookProduct) getAllProduct().get(i)).getNumOfPages()));
+                    product1.setAttributeNode(attr3);
 
                     transformer.transform(source, result);
                 }
