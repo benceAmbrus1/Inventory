@@ -2,7 +2,7 @@ package com.codecool;
 
 import java.util.List;
 
-public interface StorageCapable {
+public interface  StorageCapable {
 
     List<Product> getAllProduct();
 
